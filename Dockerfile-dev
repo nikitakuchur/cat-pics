@@ -1,0 +1,9 @@
+FROM openjdk:11-jdk-slim
+
+ARG JAR_FILE=target/*.jar
+COPY ${JAR_FILE} app.jar
+
+# Copy files
+COPY ./files /files
+
+ENTRYPOINT ["java","-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:8000","-jar","/app.jar"]

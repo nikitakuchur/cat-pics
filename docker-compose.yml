@@ -1,0 +1,25 @@
+version: "3.9"
+services:
+  backend:
+    build: .
+    ports:
+      - "8080"
+    restart: always
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "5000"
+    restart: always
+    links:
+      - backend
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    restart: always
+    links:
+      - frontend

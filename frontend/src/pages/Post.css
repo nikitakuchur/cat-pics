@@ -1,0 +1,15 @@
+.main-container {
+    background-color: #e7ecef;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.centered-block {
+    width: 700px;
+    margin: 0 auto 0 auto;
+}
+
+.carousel-item {
+    height: 600px;
+}
