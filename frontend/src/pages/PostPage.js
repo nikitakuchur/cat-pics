@@ -1,6 +1,5 @@
 import React, {Component} from "react";
 import {Button, Card, Carousel, Image} from "react-bootstrap";
-import {Link} from "react-router-dom";
 import Nav from "../components/Nav";
 
 class PostPage extends Component {
@@ -21,7 +20,8 @@ class PostPage extends Component {
                 "Content-type": "application/json"
             }
         }).then(res => res.json())
-            .then(res => this.setState({post: res}));
+            .then(res => this.setState({post: res}))
+            .catch(err => this.props.history.push('/login'));
     }
 
     render() {

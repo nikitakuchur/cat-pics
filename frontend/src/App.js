@@ -1,7 +1,9 @@
 import {Component} from "react";
 import {BrowserRouter, Route} from "react-router-dom";
-import MainPage from "./pages/MainPage";
+import FeedPage from "./pages/FeedPage";
 import PostPage from "./pages/PostPage";
+import LoginPage from "./pages/LoginPage";
+import LogoutPage from "./pages/LogoutPage";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -12,9 +14,15 @@ class App extends Component {
                 <Route
                     exact
                     path="/"
-                    component={MainPage}/>
+                    component={FeedPage}/>
                 <Route
-                    path="/:id"
+                    path="/login"
+                    component={LoginPage}/>
+                <Route
+                    path="/logout"
+                    component={LogoutPage}/>
+                <Route
+                    path="/posts/:id"
                     component={PostPage}/>
             </BrowserRouter>
         )

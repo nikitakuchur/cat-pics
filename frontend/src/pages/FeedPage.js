@@ -6,7 +6,7 @@ import NewPostModal from "../modals/NewPostModal";
 import Nav from "../components/Nav";
 import './Post.css';
 
-class MainPage extends Component {
+class FeedPage extends Component {
 
     constructor(props) {
         super(props);
@@ -27,7 +27,8 @@ class MainPage extends Component {
                 "Content-type": "application/json"
             }
         }).then(res => res.json())
-            .then(res => this.setState({posts: res}));
+            .then(res => this.setState({posts: res}))
+            .catch(err => this.props.history.push('/login'));
     }
 
     getImage(name) {
@@ -53,7 +54,7 @@ class MainPage extends Component {
         return (
             <Card className="centered-block" key={post.id}>
                 <Card.Body>
-                    <Card.Title><Link style={{color: "black"}} to={"/" + post.id}>{post.title}</Link></Card.Title>
+                    <Card.Title><Link style={{color: "black"}} to={"/posts/" + post.id}>{post.title}</Link></Card.Title>
                     <Card.Text>
                         {post.description}
                         {post.images ?
@@ -118,4 +119,4 @@ class MainPage extends Component {
     }
 }
 
-export default MainPage;
+export default FeedPage;
