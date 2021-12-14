@@ -9,7 +9,7 @@ class NavigationBar extends Component {
                 <Container>
                     <Navbar.Brand><Link style={{color: "black"}} to={"/"}>Cat Pics</Link></Navbar.Brand>
                     <Nav>
-                        <Nav.Link href="/logout">Logout</Nav.Link>
+                        <Nav.Link href="/logout">Sign out</Nav.Link>
                     </Nav>
                 </Container>
             </Navbar>

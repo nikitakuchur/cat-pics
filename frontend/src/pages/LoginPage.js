@@ -1,8 +1,9 @@
 import React, {Component} from "react";
 
 import NavigationBar from "../components/NavigationBar";
-import './Post.css';
 import {Button, Form} from "react-bootstrap";
+
+import "./LoginPage.css"
 
 class LoginPage extends Component {
 
@@ -32,15 +33,12 @@ class LoginPage extends Component {
 
     render() {
         return (
-            <>
-                <NavigationBar/>
-                <div className="main-container" style={{paddingTop: "80px", gridGap: "20px"}}>
-                    <h4>Login page</h4>
-                    <Form.Control ref={this.usernameRef} className="mb-2" placeholder="Username"/>
-                    <Form.Control ref={this.passwordRef} className="mb-2" type="password" placeholder="Password"/>
-                    <Button onClick={this.handleSignInClick.bind(this)}>Sign in</Button>
-                </div>
-            </>
+            <div className="login-form">
+                <h4>Sign in</h4>
+                <Form.Control ref={this.usernameRef} className="mb-2" placeholder="Username"/>
+                <Form.Control ref={this.passwordRef} className="mb-2" type="password" placeholder="Password"/>
+                <Button onClick={this.handleSignInClick.bind(this)}>Sign in</Button>
+            </div>
         );
     }
 }
