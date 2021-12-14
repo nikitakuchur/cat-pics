@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 
-import Nav from "../components/Nav";
+import NavigationBar from "../components/NavigationBar";
 import './Post.css';
 import {Button, Form} from "react-bootstrap";
 
@@ -33,7 +33,7 @@ class LoginPage extends Component {
     render() {
         return (
             <>
-                <Nav/>
+                <NavigationBar/>
                 <div className="main-container" style={{paddingTop: "80px", gridGap: "20px"}}>
                     <h4>Login page</h4>
                     <Form.Control ref={this.usernameRef} className="mb-2" placeholder="Username"/>

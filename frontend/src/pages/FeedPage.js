@@ -3,7 +3,7 @@ import {Card, Button, Image, Carousel} from "react-bootstrap";
 import {Link} from "react-router-dom";
 
 import NewPostModal from "../modals/NewPostModal";
-import Nav from "../components/Nav";
+import NavigationBar from "../components/NavigationBar";
 import './Post.css';
 
 class FeedPage extends Component {
@@ -108,7 +108,7 @@ class FeedPage extends Component {
                 <NewPostModal show={this.state.showNewPostModal}
                               onCancelButtonClick={() => this.setState({showNewPostModal: false})}
                               onOkButtonClick={this.handleOkButtonClick}/>
-                <Nav/>
+                <NavigationBar/>
                 <div className="main-container" style={{paddingTop: "80px", gridGap: "20px"}}>
                     <Button className="centered-block" variant="outline-primary" size="lg" style={{height: "80px"}}
                             onClick={() => this.setState({showNewPostModal: true})}>Show your cat to the world!</Button>

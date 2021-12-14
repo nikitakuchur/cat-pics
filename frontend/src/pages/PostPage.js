@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import {Button, Card, Carousel, Image} from "react-bootstrap";
-import Nav from "../components/Nav";
+import NavigationBar from "../components/NavigationBar";
 
 class PostPage extends Component {
 
@@ -42,7 +42,7 @@ class PostPage extends Component {
 
         return (
             <>
-                <Nav/>
+                <NavigationBar/>
                 <div className="main-container" style={{paddingTop: "80px", gridGap: "20px"}}>
                     <Card className="centered-block">
                         <Card.Body>
