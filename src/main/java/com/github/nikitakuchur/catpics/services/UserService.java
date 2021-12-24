@@ -1,7 +1,6 @@
 package com.github.nikitakuchur.catpics.services;
 
 import com.github.nikitakuchur.catpics.repositories.UserRepository;
-import com.github.nikitakuchur.catpics.security.UserPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -20,7 +19,6 @@ public class UserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        var user = userRepository.findByUsername(username);
-        return new UserPrincipal(user);
+        return userRepository.findByUsername(username);
     }
 }

@@ -1,6 +1,6 @@
 package com.github.nikitakuchur.catpics.repositories;
 
-import com.github.nikitakuchur.catpics.models.AppUser;
+import com.github.nikitakuchur.catpics.models.User;
 import com.github.nikitakuchur.catpics.security.UserRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -23,8 +23,8 @@ public class UserConfig {
     @Bean("UserCommandLineRunner")
     CommandLineRunner commandLineRunner(UserRepository userRepository) {
         return args -> userRepository.saveAll(List.of(
-                new AppUser(1L, "admin", passwordEncoder.encode("admin"), UserRole.ADMIN),
-                new AppUser(2L, "test", passwordEncoder.encode("test"), UserRole.USER)
+                new User(1L, "admin", passwordEncoder.encode("admin"), UserRole.ADMIN),
+                new User(2L, "test", passwordEncoder.encode("test"), UserRole.USER)
         ));
     }
 }
