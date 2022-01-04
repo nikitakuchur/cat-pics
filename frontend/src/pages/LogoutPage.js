@@ -7,10 +7,8 @@ class LogoutPage extends Component {
     }
 
     componentDidMount() {
-        fetch("/api/logout", {
-        method: "GET"
-    }).then(res => this.props.history.push('/login'))
-        .catch(err => this.props.history.push('/'));
+        localStorage.removeItem("token");
+        this.props.history.push('/');
     }
 
     render() {

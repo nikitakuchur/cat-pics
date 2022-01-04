@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import {Button, Card, Carousel, Image} from "react-bootstrap";
 import NavigationBar from "../components/NavigationBar";
+import {Redirect} from "react-router-dom";
 
 class PostPage extends Component {
 
@@ -17,7 +18,8 @@ class PostPage extends Component {
         fetch("/api/posts/" + this.props.match.params.id, {
             method: "GET",
             headers: {
-                "Content-type": "application/json"
+                "Content-type": "application/json",
+                "Authorization": localStorage.getItem("token")
             }
         }).then(res => res.json())
             .then(res => this.setState({post: res}))
@@ -25,13 +27,17 @@ class PostPage extends Component {
     }
 
     render() {
+        if (!localStorage.getItem("token")) {
+            return <Redirect to="/login"/>;
+        }
+
         if (!this.state.post) {
             return (<></>);
         }
 
         let images = [];
         for (let image of this.state.post.images) {
-            images.push(<Carousel.Item>
+            images.push(<Carousel.Item key={image}>
                 <div style={{display: "flex", justifyContent: "center", alignItems: "center", height: "600px"}}>
                     <Image src={"http://localhost:8080/api/images/" + image}
                            style={{maxHeight: "600px", maxWidth: "100%"}}
@@ -49,13 +55,13 @@ class PostPage extends Component {
                             <Card.Title>{this.state.post.title}</Card.Title>
                             <Card.Text>
                                 {this.state.post.description}
-                                {this.state.post.images ?
-                                    <Carousel controls={this.state.post.images.length > 1}
-                                              indicators={this.state.post.images.length > 1}>
-                                        {images}
-                                    </Carousel> : null
-                                }
                             </Card.Text>
+                            {this.state.post.images ?
+                                <Carousel controls={this.state.post.images.length > 1}
+                                          indicators={this.state.post.images.length > 1}>
+                                    {images}
+                                </Carousel> : null
+                            }
                             <Button>{this.state.post.likes} Likes</Button>
                             <Button className={"ml-1"} style={{float: "right"}}>Share</Button>
                             <Button style={{float: "right"}}>Comments</Button>

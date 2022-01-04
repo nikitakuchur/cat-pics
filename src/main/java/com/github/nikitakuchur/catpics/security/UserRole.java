@@ -17,10 +17,6 @@ public enum UserRole {
         this.permissions = Set.of(permissions);
     }
 
-    public boolean hasPermission(UserPermission permission) {
-        return permissions.contains(permission);
-    }
-
     public Set<SimpleGrantedAuthority> getGrantedAuthorities() {
         Set<SimpleGrantedAuthority> result = permissions.stream()
                 .map(permission -> new SimpleGrantedAuthority(permission.getPermission()))

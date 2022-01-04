@@ -1,6 +1,4 @@
 import React, {Component} from "react";
-
-import NavigationBar from "../components/NavigationBar";
 import {Button, Form} from "react-bootstrap";
 
 import "./LoginPage.css"
@@ -21,14 +19,16 @@ class LoginPage extends Component {
         fetch("/api/login", {
             method: "POST",
             headers: {
-                "Content-type": "application/x-www-form-urlencoded"
+                "Content-type": "application/json"
             },
-            body: new URLSearchParams({
+            body: JSON.stringify({
                 'username': this.usernameRef.current.value,
                 'password': this.passwordRef.current.value
             })
-        }).then(res => this.props.history.push('/'))
-            .catch(err => this.props.history.push('/login'));
+        }).then(res => {
+            localStorage.setItem("token", res.headers.get("authorization"));
+            this.props.history.push('/');
+        }).catch(err => this.props.history.push('/login'));
     }
 
     render() {

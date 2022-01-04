@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import {Card, Button, Image, Carousel} from "react-bootstrap";
-import {Link} from "react-router-dom";
+import {Link, Redirect} from "react-router-dom";
 
 import NewPostModal from "../modals/NewPostModal";
 import NavigationBar from "../components/NavigationBar";
@@ -24,18 +24,19 @@ class FeedPage extends Component {
         fetch("/api/posts", {
             method: "GET",
             headers: {
-                "Content-type": "application/json"
+                "Content-type": "application/json",
+                "Authorization": localStorage.getItem("token")
             }
         }).then(res => res.json())
-            .then(res => this.setState({posts: res}))
-            .catch(err => this.props.history.push('/login'));
+            .then(res => this.setState({posts: res}));
     }
 
     getImage(name) {
         return fetch("/api/files" + name, {
             method: "GET",
             headers: {
-                "Content-type": "application/json"
+                "Content-type": "application/json",
+                "Authorization": localStorage.getItem("token")
             }
         });
     }
@@ -43,7 +44,7 @@ class FeedPage extends Component {
     card(post) {
         let images = [];
         for (let image of post.images) {
-            images.push(<Carousel.Item>
+            images.push(<Carousel.Item key={image}>
                 <div style={{display: "flex", justifyContent: "center", alignItems: "center", height: "600px"}}>
                     <Image src={"http://localhost:8080/api/images/" + image}
                            style={{maxHeight: "600px", maxWidth: "100%"}}
@@ -57,12 +58,12 @@ class FeedPage extends Component {
                     <Card.Title><Link style={{color: "black"}} to={"/posts/" + post.id}>{post.title}</Link></Card.Title>
                     <Card.Text>
                         {post.description}
-                        {post.images ?
-                            <Carousel controls={post.images.length > 1} indicators={post.images.length > 1}>
-                                {images}
-                            </Carousel> : null
-                        }
                     </Card.Text>
+                    {post.images ?
+                        <Carousel controls={post.images.length > 1} indicators={post.images.length > 1}>
+                            {images}
+                        </Carousel> : null
+                    }
                     <Button>{post.likes} Likes</Button>
                     <Button className={"ml-1"} style={{float: "right"}}>Share</Button>
                     <Button style={{float: "right"}}>Comments</Button>
@@ -79,25 +80,33 @@ class FeedPage extends Component {
         }
         fetch("/api/images", {
             method: "POST",
+            headers: {
+                "Authorization": localStorage.getItem("token")
+            },
             body: formData
         }).then(res => res.json())
             .then(res => {
                 fetch("/api/posts", {
                     method: "POST",
+                    headers: {
+                        "Content-type": "application/json",
+                        "Authorization": localStorage.getItem("token")
+                    },
                     body: JSON.stringify({
                         title: post.title,
                         description: post.description,
                         images: res
-                    }),
-                    headers: {
-                        "Content-type": "application/json"
-                    }
+                    })
                 }).then(() => this.loadPosts());
             });
 
     }
 
     render() {
+        if (!localStorage.getItem("token")) {
+            return <Redirect to="/login" />;
+        }
+
         let posts = [];
         for (let post of this.state.posts) {
             posts.push(this.card(post));
