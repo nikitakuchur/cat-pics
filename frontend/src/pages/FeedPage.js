@@ -46,7 +46,7 @@ class FeedPage extends Component {
         for (let image of post.images) {
             images.push(<Carousel.Item key={image}>
                 <div style={{display: "flex", justifyContent: "center", alignItems: "center", height: "600px"}}>
-                    <Image src={"http://localhost:8080/api/images/" + image}
+                    <Image src={"/api/images/" + image}
                            style={{maxHeight: "600px", maxWidth: "100%"}}
                            rounded/>
                 </div>
