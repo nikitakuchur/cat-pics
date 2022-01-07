@@ -60,7 +60,7 @@ class FeedPage extends Component {
                         {post.description}
                     </Card.Text>
                     {post.images ?
-                        <Carousel controls={post.images.length > 1} indicators={post.images.length > 1}>
+                        <Carousel className={"mb-4"} controls={post.images.length > 1} indicators={post.images.length > 1}>
                             {images}
                         </Carousel> : null
                     }
