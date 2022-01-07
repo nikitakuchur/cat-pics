@@ -1,7 +1,8 @@
 import React, {Component} from "react";
 import {Button, Form} from "react-bootstrap";
 
-import "./LoginPage.css"
+import "./Form.css"
+import {Link} from "react-router-dom";
 
 class LoginPage extends Component {
 
@@ -33,11 +34,12 @@ class LoginPage extends Component {
 
     render() {
         return (
-            <div className="login-form">
-                <h4>Sign in</h4>
+            <div className="form">
+                <h4>Log in</h4>
                 <Form.Control ref={this.usernameRef} className="mb-2" placeholder="Username"/>
                 <Form.Control ref={this.passwordRef} className="mb-2" type="password" placeholder="Password"/>
-                <Button onClick={this.handleSignInClick.bind(this)}>Sign in</Button>
+                <Button onClick={this.handleSignInClick.bind(this)}>Log in</Button>
+                <Link to="/signup">Create a new account</Link>
             </div>
         );
     }

@@ -1,6 +1,7 @@
 package com.github.nikitakuchur.catpics.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.nikitakuchur.catpics.dto.LoginRequest;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -29,7 +30,7 @@ public class JwtUsernamePasswordAuthenticationFilter extends UsernamePasswordAut
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
         try {
-            UsernamePasswordRequest req = new ObjectMapper().readValue(request.getInputStream(), UsernamePasswordRequest.class);
+            LoginRequest req = new ObjectMapper().readValue(request.getInputStream(), LoginRequest.class);
 
             Authentication authentication = new UsernamePasswordAuthenticationToken(req.getUsername(), req.getPassword());
             return authenticationManager.authenticate(authentication);

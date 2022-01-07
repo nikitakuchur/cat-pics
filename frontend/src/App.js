@@ -2,6 +2,7 @@ import {Component} from "react";
 import {BrowserRouter, Route} from "react-router-dom";
 import FeedPage from "./pages/FeedPage";
 import PostPage from "./pages/PostPage";
+import SignupPage from "./pages/SignupPage";
 import LoginPage from "./pages/LoginPage";
 import LogoutPage from "./pages/LogoutPage";
 
@@ -15,6 +16,9 @@ class App extends Component {
                     exact
                     path="/"
                     component={FeedPage}/>
+                <Route
+                    path="/signup"
+                    component={SignupPage}/>
                 <Route
                     path="/login"
                     component={LoginPage}/>

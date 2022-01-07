@@ -1,6 +1,6 @@
-package com.github.nikitakuchur.catpics.security;
+package com.github.nikitakuchur.catpics.dto;
 
-public class UsernamePasswordRequest {
+public class LoginRequest {
 
     private String username;
     private String password;

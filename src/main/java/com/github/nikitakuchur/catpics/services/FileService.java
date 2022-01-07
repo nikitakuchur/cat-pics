@@ -1,10 +1,11 @@
 package com.github.nikitakuchur.catpics.services;
 
-import com.github.nikitakuchur.catpics.exceptions.FileNotFoundException;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -29,7 +30,7 @@ public class FileService {
     public Resource load(String filename) {
         String filepath = FILE_DIRECTORY + filename;
         if (!Files.exists(Path.of(filepath))) {
-            throw new FileNotFoundException(String.format("Can't find the file named '%s'", filename));
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("Can't find the file named '%s'", filename));
         }
         return new FileSystemResource(filepath);
     }
