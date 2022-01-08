@@ -12,15 +12,31 @@ class FeedPage extends Component {
         super(props);
         this.state = {
             showNewPostModal: false,
+            permissions: [],
             posts: [],
         };
     }
 
     componentDidMount() {
-        this.loadPosts();
+        this.loadPermissions()
+            .then(() => this.loadPosts());
+    }
+
+    loadPermissions() {
+        return fetch("/api/user/permissions", {
+            method: "GET",
+            headers: {
+                "Content-type": "application/json",
+                "Authorization": localStorage.getItem("token")
+            }
+        }).then(res => res.json())
+            .then(res => this.setState({permissions: res}));
     }
 
     loadPosts() {
+        if (!this.state.permissions.includes("post:read")) {
+            return;
+        }
         fetch("/api/posts", {
             method: "GET",
             headers: {
@@ -55,12 +71,14 @@ class FeedPage extends Component {
         return (
             <Card className="centered-block" key={post.id}>
                 <Card.Body>
+                    <p className={"m-0 p-0"} style={{textAlign: "right", fontSize: 14, color: "grey"}}>{post.author.username}</p>
                     <Card.Title><Link style={{color: "black"}} to={"/posts/" + post.id}>{post.title}</Link></Card.Title>
                     <Card.Text>
                         {post.description}
                     </Card.Text>
                     {post.images ?
-                        <Carousel className={"mb-4"} controls={post.images.length > 1} indicators={post.images.length > 1}>
+                        <Carousel className={"mb-4"} controls={post.images.length > 1}
+                                  indicators={post.images.length > 1}>
                             {images}
                         </Carousel> : null
                     }
@@ -104,7 +122,7 @@ class FeedPage extends Component {
 
     render() {
         if (!localStorage.getItem("token")) {
-            return <Redirect to="/login" />;
+            return <Redirect to="/login"/>;
         }
 
         let posts = [];
@@ -119,8 +137,11 @@ class FeedPage extends Component {
                               onOkButtonClick={this.handleOkButtonClick}/>
                 <NavigationBar/>
                 <div className="main-container" style={{paddingTop: "80px", gridGap: "20px"}}>
-                    <Button className="centered-block" variant="outline-primary" size="lg" style={{height: "80px"}}
-                            onClick={() => this.setState({showNewPostModal: true})}>Show your cat to the world!</Button>
+                    {this.state.permissions.includes("post:create") ?
+                        <Button className="centered-block" variant="outline-primary" size="lg" style={{height: "80px"}}
+                                onClick={() => this.setState({showNewPostModal: true})}>Show your cat to the
+                            world!</Button>
+                        : null}
                     {posts}
                 </div>
             </>

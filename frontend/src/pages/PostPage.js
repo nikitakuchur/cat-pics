@@ -46,6 +46,7 @@ class PostPage extends Component {
             </Carousel.Item>)
         }
 
+        // TODO: Code duplication (see FeedPage.js)
         return (
             <>
                 <NavigationBar/>

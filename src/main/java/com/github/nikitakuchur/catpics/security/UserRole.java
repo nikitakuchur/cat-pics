@@ -8,8 +8,8 @@ import java.util.stream.Collectors;
 import static com.github.nikitakuchur.catpics.security.UserPermission.*;
 
 public enum UserRole {
-    ADMIN(POST_READ, POST_CREATE),
-    USER(POST_READ);
+    ADMIN(POST_READ, POST_CREATE, POST_EDIT, POST_DELETE),
+    USER(POST_READ, POST_CREATE);
 
     private final Set<UserPermission> permissions;
 

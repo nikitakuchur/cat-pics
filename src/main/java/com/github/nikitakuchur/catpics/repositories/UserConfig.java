@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.List;
@@ -21,6 +22,7 @@ public class UserConfig {
     }
 
     @Bean("UserCommandLineRunner")
+    @Order(1)
     CommandLineRunner commandLineRunner(UserRepository userRepository) {
         return args -> userRepository.saveAll(List.of(
                 new User(1L, "admin", passwordEncoder.encode("admin"), UserRole.ADMIN),
