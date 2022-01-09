@@ -44,8 +44,7 @@ class PostPage extends Component {
                     deletable: localStorage.getItem("user") === res.author.username
                         || this.state.permissions.includes("post:delete")
                 });
-            })
-            .catch(err => this.props.history.push('/login'));
+            });
     }
 
     render() {
@@ -53,7 +52,6 @@ class PostPage extends Component {
             return <Redirect to="/login"/>;
         }
 
-        // TODO: Code duplication (see FeedPage.js)
         return (
             <>
                 <NavigationBar/>

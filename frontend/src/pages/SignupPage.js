@@ -14,9 +14,6 @@ class SignupPage extends Component {
         this.secondPasswordRef = React.createRef();
     }
 
-    componentDidMount() {
-    }
-
     handleSignUpClick() {
         const password = this.passwordRef.current.value;
         const secondPassword = this.secondPasswordRef.current.value;
@@ -50,12 +47,19 @@ class SignupPage extends Component {
             } else {
                 this.props.history.push('/login');
             }
-        }).catch(err => this.props.history.push('/signup'));
+        }).catch(err => {
+            console.log(err);
+            this.props.history.push('/signup');
+        });
     }
 
     render() {
         return (
-            <div className="form">
+            <div className="form" onKeyDown={e => {
+                if (e.key === 'Enter') {
+                    this.handleSignUpClick.bind(this)();
+                }
+            }}>
                 <h4>Sign up</h4>
                 <Form.Control ref={this.usernameRef} className="mb-2" placeholder="Username"
                               isInvalid={this.state.usernameIsTaken}/>
@@ -70,7 +74,8 @@ class SignupPage extends Component {
                     <p className="mb-2" style={{color: "red"}}>The password must contain at least 8 characters. Please,
                         try again.</p> : null}
                 {this.state.passwordIsNotConfirmed ?
-                    <p className="mb-2" style={{color: "red"}}>The passwords do not match. Please, try again.</p> : null}
+                    <p className="mb-2" style={{color: "red"}}>The passwords do not match. Please, try
+                        again.</p> : null}
                 <Button onClick={this.handleSignUpClick.bind(this)}>Sign up</Button>
                 <Link to="/login">I already have an account</Link>
             </div>

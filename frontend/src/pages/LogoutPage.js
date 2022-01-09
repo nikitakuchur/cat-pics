@@ -13,9 +13,7 @@ class LogoutPage extends Component {
     }
 
     render() {
-        return (
-            <></>
-        );
+        return (<></>);
     }
 }
 

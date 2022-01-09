@@ -1,8 +1,8 @@
 import React, {Component} from "react";
 import {Button, Form} from "react-bootstrap";
+import {Link} from "react-router-dom";
 
 import "./Form.css"
-import {Link} from "react-router-dom";
 
 class LoginPage extends Component {
 
@@ -11,9 +11,6 @@ class LoginPage extends Component {
         this.state = {};
         this.usernameRef = React.createRef();
         this.passwordRef = React.createRef();
-    }
-
-    componentDidMount() {
     }
 
     handleSignInClick() {
@@ -29,15 +26,24 @@ class LoginPage extends Component {
                 'password': password
             })
         }).then(res => {
-            localStorage.setItem("token", res.headers.get("authorization"));
-            localStorage.setItem("user", username);
-            this.props.history.push('/');
-        }).catch(err => this.props.history.push('/login'));
+            if (res.status === 200) {
+                localStorage.setItem("token", res.headers.get("authorization"));
+                localStorage.setItem("user", username);
+                this.props.history.push('/');
+            }
+        }).catch(err => {
+            console.log(err);
+            this.props.history.push('/login');
+        });
     }
 
     render() {
         return (
-            <div className="form">
+            <div className="form" onKeyDown={e => {
+                if (e.key === 'Enter') {
+                    this.handleSignInClick.bind(this)();
+                }
+            }}>
                 <h4>Log in</h4>
                 <Form.Control ref={this.usernameRef} className="mb-2" placeholder="Username"/>
                 <Form.Control ref={this.passwordRef} className="mb-2" type="password" placeholder="Password"/>
