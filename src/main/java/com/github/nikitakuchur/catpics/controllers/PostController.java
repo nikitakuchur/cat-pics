@@ -1,5 +1,6 @@
 package com.github.nikitakuchur.catpics.controllers;
 
+import com.github.nikitakuchur.catpics.dto.PostRequest;
 import com.github.nikitakuchur.catpics.models.Post;
 import com.github.nikitakuchur.catpics.models.User;
 import com.github.nikitakuchur.catpics.services.PostService;
@@ -39,14 +40,12 @@ public class PostController {
         return postService.get(id);
     }
 
-    // TODO: replace the parameter with dto
     @PostMapping
     @PreAuthorize("hasAuthority('post:create')")
-    public void save(@RequestBody Post post, HttpServletRequest request) {
+    public void save(@RequestBody PostRequest post, HttpServletRequest request) {
         Principal principal = request.getUserPrincipal();
         User user = userService.loadUserByUsername(principal.getName());
-        post.setAuthor(user);
-        postService.save(post);
+        postService.save(new Post(null, user, post.getTitle(), post.getDescription(), post.getImages(), 0));
     }
 
     @DeleteMapping("/{id}")

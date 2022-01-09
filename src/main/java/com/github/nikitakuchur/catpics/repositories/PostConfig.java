@@ -16,7 +16,7 @@ public class PostConfig {
     @Order(2)
     CommandLineRunner commandLineRunner(PostRepository postRepository, UserService userService) {
         return args -> postRepository.saveAll(List.of(
-                new Post(1L, userService.loadUserByUsername("admin"), "This cat is so cool", "OMG, look at this cool cat!", List.of("cool-cat.jpg", "cat-in-a-hat.jpg"), 13),
+                new Post(1L, userService.loadUserByUsername("admin"), "This cat is so cool", "OMG, look at this cool cat!", List.of("cool-cat.jpg"), 13),
                 new Post(2L, userService.loadUserByUsername("admin"), "Cat in a hat", "This hat suits him so well!", List.of("cat-in-a-hat.jpg"), 12)
         ));
     }

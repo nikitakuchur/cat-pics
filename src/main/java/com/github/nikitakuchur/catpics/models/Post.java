@@ -45,10 +45,6 @@ public class Post {
         return author;
     }
 
-    public void setAuthor(User user) {
-        this.author = user;
-    }
-
     public String getTitle() {
         return title;
     }
