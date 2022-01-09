@@ -103,7 +103,7 @@ class FeedPage extends Component {
 
         let posts = [];
         for (let post of this.state.posts) {
-            posts.push(<Post post={post}/>);
+            posts.push(<Post post={post} key={post.id}/>);
         }
 
         return (

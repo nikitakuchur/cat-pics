@@ -37,7 +37,6 @@ class Post extends Component {
             </Carousel.Item>)
         }
 
-        // TODO: Code duplication (see FeedPage.js)
         return (
             <>
                 <Card className="centered-block">
@@ -58,7 +57,7 @@ class Post extends Component {
                         </Card.Text>
                         {this.props.post.images ?
                             <Carousel className={"mb-4"} controls={this.props.post.images.length > 1}
-                                      indicators={this.props.post.images.length > 1}>
+                                      indicators={this.props.post.images.length > 1} slide={false}>
                                 {images}
                             </Carousel> : null
                         }
