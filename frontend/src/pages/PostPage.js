@@ -1,17 +1,33 @@
 import React, {Component} from "react";
-import {Button, Card, Carousel, Image} from "react-bootstrap";
 import NavigationBar from "../components/NavigationBar";
 import {Redirect} from "react-router-dom";
+import PostContainer from "../components/PostContainer";
+import Post from "../components/Post";
 
 class PostPage extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            permissions: [],
+            deletable: false
+        };
     }
 
     componentDidMount() {
-        this.loadPost();
+        this.loadPermissions()
+            .then(() => this.loadPost());
+    }
+
+    loadPermissions() {
+        return fetch("/api/user/permissions", {
+            method: "GET",
+            headers: {
+                "Content-type": "application/json",
+                "Authorization": localStorage.getItem("token")
+            }
+        }).then(res => res.json())
+            .then(res => this.setState({permissions: res}));
     }
 
     loadPost() {
@@ -22,7 +38,13 @@ class PostPage extends Component {
                 "Authorization": localStorage.getItem("token")
             }
         }).then(res => res.json())
-            .then(res => this.setState({post: res}))
+            .then(res => {
+                this.setState({
+                    post: res,
+                    deletable: localStorage.getItem("user") === res.author.username
+                        || this.state.permissions.includes("post:delete")
+                });
+            })
             .catch(err => this.props.history.push('/login'));
     }
 
@@ -31,44 +53,13 @@ class PostPage extends Component {
             return <Redirect to="/login"/>;
         }
 
-        if (!this.state.post) {
-            return (<></>);
-        }
-
-        let images = [];
-        for (let image of this.state.post.images) {
-            images.push(<Carousel.Item key={image}>
-                <div style={{display: "flex", justifyContent: "center", alignItems: "center", height: "600px"}}>
-                    <Image src={"/api/images/" + image}
-                           style={{maxHeight: "600px", maxWidth: "100%"}}
-                           rounded/>
-                </div>
-            </Carousel.Item>)
-        }
-
         // TODO: Code duplication (see FeedPage.js)
         return (
             <>
                 <NavigationBar/>
-                <div className="main-container" style={{paddingTop: "80px", gridGap: "20px"}}>
-                    <Card className="centered-block">
-                        <Card.Body>
-                            <Card.Title>{this.state.post.title}</Card.Title>
-                            <Card.Text>
-                                {this.state.post.description}
-                            </Card.Text>
-                            {this.state.post.images ?
-                                <Carousel controls={this.state.post.images.length > 1}
-                                          indicators={this.state.post.images.length > 1}>
-                                    {images}
-                                </Carousel> : null
-                            }
-                            <Button>{this.state.post.likes} Likes</Button>
-                            <Button className={"ml-1"} style={{float: "right"}}>Share</Button>
-                            <Button style={{float: "right"}}>Comments</Button>
-                        </Card.Body>
-                    </Card>
-                </div>
+                <PostContainer>
+                    <Post post={this.state.post} deletable={this.state.deletable}/>
+                </PostContainer>
             </>
         );
     }

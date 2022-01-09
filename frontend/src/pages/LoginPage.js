@@ -17,17 +17,20 @@ class LoginPage extends Component {
     }
 
     handleSignInClick() {
+        const username = this.usernameRef.current.value;
+        const password = this.passwordRef.current.value;
         fetch("/api/login", {
             method: "POST",
             headers: {
                 "Content-type": "application/json"
             },
             body: JSON.stringify({
-                'username': this.usernameRef.current.value,
-                'password': this.passwordRef.current.value
+                'username': username,
+                'password': password
             })
         }).then(res => {
             localStorage.setItem("token", res.headers.get("authorization"));
+            localStorage.setItem("user", username);
             this.props.history.push('/');
         }).catch(err => this.props.history.push('/login'));
     }

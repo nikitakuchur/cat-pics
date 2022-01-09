@@ -8,6 +8,7 @@ class LogoutPage extends Component {
 
     componentDidMount() {
         localStorage.removeItem("token");
+        localStorage.removeItem("user");
         this.props.history.push('/');
     }
 
