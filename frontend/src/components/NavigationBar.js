@@ -7,7 +7,7 @@ class NavigationBar extends Component {
         return (
             <Navbar bg="white" expand="lg" fixed="top">
                 <Container>
-                    <Navbar.Brand><Link style={{color: "black"}} to={"/"}>Cat Pics</Link></Navbar.Brand>
+                    <Navbar.Brand><Link className="text-decoration-none" style={{color: "black", fontSize: "24px"}} to={"/"}>Cat Pics</Link></Navbar.Brand>
                     <Nav>
                         <Nav.Link href="/logout">Sign out</Nav.Link>
                     </Nav>

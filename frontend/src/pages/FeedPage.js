@@ -50,16 +50,6 @@ class FeedPage extends Component {
             .then(res => this.setState({posts: res}));
     }
 
-    getImage(name) {
-        return fetch("/api/files" + name, {
-            method: "GET",
-            headers: {
-                "Content-type": "application/json",
-                "Authorization": localStorage.getItem("token")
-            }
-        });
-    }
-
     saveImages(images) {
         if (!images || images.length === 0) {
             return Promise.resolve();
@@ -74,7 +64,7 @@ class FeedPage extends Component {
                 "Authorization": localStorage.getItem("token")
             },
             body: formData
-        });
+        }).then(res => res.json());
     }
 
     handleOkButtonClick = (post) => {
@@ -90,7 +80,7 @@ class FeedPage extends Component {
                     body: JSON.stringify({
                         title: post.title,
                         description: post.description,
-                        images: res ? res.json : null
+                        images: res
                     })
                 }).then(() => this.loadPosts());
             });

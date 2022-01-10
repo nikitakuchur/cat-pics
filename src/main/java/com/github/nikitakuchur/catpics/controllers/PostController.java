@@ -48,6 +48,7 @@ public class PostController {
         postService.save(new Post(null, user, post.getTitle(), post.getDescription(), post.getImages(), 0));
     }
 
+    // TODO: delete images
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id, HttpServletRequest request) {
         Principal principal = request.getUserPrincipal();
