@@ -5,18 +5,18 @@ import com.github.nikitakuchur.catpics.models.Post;
 import com.github.nikitakuchur.catpics.models.User;
 import com.github.nikitakuchur.catpics.services.PostService;
 import com.github.nikitakuchur.catpics.services.UserService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "/posts")
+@RequestMapping(path = "/api/posts")
 public class PostController {
 
     private final PostService postService;
@@ -59,6 +59,9 @@ public class PostController {
         }
 
         Post post = postService.get(id);
+        if (post == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "The post doesn't exist.");
+        }
         if (post.getAuthor().getUsername().equals(principal.getName())) {
             postService.delete(id);
             return;

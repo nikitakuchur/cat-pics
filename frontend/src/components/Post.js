@@ -1,4 +1,5 @@
 import React, {Component} from "react";
+import {withRouter} from 'react-router-dom';
 import {
     Button,
     Card,
@@ -7,7 +8,6 @@ import {
     Image,
     Row,
     ToggleButton,
-    ToggleButtonGroup
 } from "react-bootstrap";
 import {Link} from "react-router-dom";
 
@@ -25,9 +25,9 @@ class Post extends Component {
             method: "DELETE",
             headers: {
                 "Content-type": "application/json",
-                "Authorization": localStorage.getItem("token")
+                "Authorization": "Bearer " + localStorage.getItem("token")
             }
-        });
+        }).then(() => this.props.history.push('/'));
     }
 
     render() {
@@ -53,10 +53,10 @@ class Post extends Component {
                         <Container>
                             <Row className="justify-content-md-end" xs="auto">
                                 {this.props.deletable ?
-                                    <Link className={"m-0 p-0 me-2"} style={{fontSize: 12, color: "grey"}}
-                                          to="/" onClick={this.handleDeleteButtonClick}>delete</Link> : null}
-                                <p className={"m-0 p-0"}
-                                   style={{fontSize: 12, color: "grey"}}>{this.props.post.author.username}</p>
+                                    <Button variant="link" className={"m-0 p-0 me-2"} style={{fontSize: 12, color: "grey"}}
+                                            onClick={this.handleDeleteButtonClick}>delete</Button> : null}
+                                <Button variant="link" className={"m-0 p-0"}
+                                   style={{fontSize: 12, color: "grey"}}>{this.props.post.author.username}</Button>
                             </Row>
                         </Container>
                         <Card.Title>
@@ -84,4 +84,4 @@ class Post extends Component {
     }
 }
 
-export default Post;
+export default withRouter(Post);

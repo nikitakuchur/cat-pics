@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.List;
 
 @Service
@@ -28,6 +29,10 @@ public class PostService {
 
     public void save(Post post) {
         postRepository.save(post);
+    }
+
+    public void saveAll(Collection<Post> posts) {
+        postRepository.saveAll(posts);
     }
 
     public void delete(Long id) {

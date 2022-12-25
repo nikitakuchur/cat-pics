@@ -2,10 +2,10 @@ package com.github.nikitakuchur.catpics.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.github.nikitakuchur.catpics.security.UserRole;
+import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.*;
 import java.util.Collection;
 
 @Entity

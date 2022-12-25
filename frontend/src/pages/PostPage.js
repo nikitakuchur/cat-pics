@@ -24,7 +24,7 @@ class PostPage extends Component {
             method: "GET",
             headers: {
                 "Content-type": "application/json",
-                "Authorization": localStorage.getItem("token")
+                "Authorization": "Bearer " + localStorage.getItem("token")
             }
         }).then(res => res.json())
             .then(res => this.setState({permissions: res}));
@@ -35,7 +35,7 @@ class PostPage extends Component {
             method: "GET",
             headers: {
                 "Content-type": "application/json",
-                "Authorization": localStorage.getItem("token")
+                "Authorization": "Bearer " + localStorage.getItem("token")
             }
         }).then(res => res.json())
             .then(res => {
@@ -44,6 +44,9 @@ class PostPage extends Component {
                     deletable: localStorage.getItem("user") === res.author.username
                         || this.state.permissions.includes("post:delete")
                 });
+            }).catch(err => {
+                console.log(err);
+                this.props.history.push('/');
             });
     }
 

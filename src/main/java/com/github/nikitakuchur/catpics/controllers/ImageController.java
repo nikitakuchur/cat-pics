@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "/images")
+@RequestMapping(path = "/api/images")
 public class ImageController {
 
     private final FileService fileService;
@@ -24,7 +24,6 @@ public class ImageController {
 
     @GetMapping(value = "/{name}", produces = MediaType.IMAGE_JPEG_VALUE)
     @ResponseBody
-    @PreAuthorize("permitAll()")
     public byte[] get(@PathVariable String name) throws IOException {
         var file = fileService.load(name);
         return file.getInputStream().readAllBytes();

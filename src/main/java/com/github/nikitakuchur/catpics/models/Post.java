@@ -1,6 +1,7 @@
 package com.github.nikitakuchur.catpics.models;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
+
 import java.util.Collections;
 import java.util.List;
 

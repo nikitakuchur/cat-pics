@@ -16,7 +16,7 @@ class LoginPage extends Component {
     handleSignInClick() {
         const username = this.usernameRef.current.value;
         const password = this.passwordRef.current.value;
-        fetch("/api/login", {
+        fetch("/api/auth/login", {
             method: "POST",
             headers: {
                 "Content-type": "application/json"
@@ -25,16 +25,15 @@ class LoginPage extends Component {
                 'username': username,
                 'password': password
             })
-        }).then(res => {
-            if (res.status === 200) {
-                localStorage.setItem("token", res.headers.get("authorization"));
+        }).then(res => res.json())
+            .then(res => {
+                localStorage.setItem("token", res.accessToken);
                 localStorage.setItem("user", username);
                 this.props.history.push('/');
-            }
-        }).catch(err => {
-            console.log(err);
-            this.props.history.push('/login');
-        });
+            }).catch(err => {
+                console.log(err);
+                this.props.history.push('/login');
+            });
     }
 
     render() {

@@ -30,10 +30,14 @@ class FeedPage extends Component {
             method: "GET",
             headers: {
                 "Content-type": "application/json",
-                "Authorization": localStorage.getItem("token")
+                "Authorization": "Bearer " + localStorage.getItem("token")
             }
         }).then(res => res.json())
-            .then(res => this.setState({permissions: res}));
+            .then(res => this.setState({permissions: res}))
+            .catch(err => {
+                console.log(err);
+                this.props.history.push('/login');
+            });
     }
 
     loadPosts() {
@@ -44,7 +48,7 @@ class FeedPage extends Component {
             method: "GET",
             headers: {
                 "Content-type": "application/json",
-                "Authorization": localStorage.getItem("token")
+                "Authorization": "Bearer " + localStorage.getItem("token")
             }
         }).then(res => res.json())
             .then(res => this.setState({posts: res}));
@@ -61,7 +65,7 @@ class FeedPage extends Component {
         return fetch("/api/images", {
             method: "POST",
             headers: {
-                "Authorization": localStorage.getItem("token")
+                "Authorization": "Bearer " + localStorage.getItem("token")
             },
             body: formData
         }).then(res => res.json());
@@ -75,7 +79,7 @@ class FeedPage extends Component {
                     method: "POST",
                     headers: {
                         "Content-type": "application/json",
-                        "Authorization": localStorage.getItem("token")
+                        "Authorization": "Bearer "+ localStorage.getItem("token")
                     },
                     body: JSON.stringify({
                         title: post.title,
