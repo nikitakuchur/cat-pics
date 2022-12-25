@@ -1,4 +1,4 @@
-package com.github.nikitakuchur.catpics.controllers;
+package com.github.nikitakuchur.catpics.rest;
 
 import com.github.nikitakuchur.catpics.dto.LoginRequest;
 import com.github.nikitakuchur.catpics.dto.SignupRequest;
@@ -7,21 +7,18 @@ import com.github.nikitakuchur.catpics.models.User;
 import com.github.nikitakuchur.catpics.security.UserRole;
 import com.github.nikitakuchur.catpics.services.AuthService;
 import com.github.nikitakuchur.catpics.services.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping(path = "/api/auth")
 public class AuthController {
 
     private final AuthService authService;
     private final UserService userService;
-
-    public AuthController(UserService userService, AuthService authService) {
-        this.userService = userService;
-        this.authService = authService;
-    }
 
     @PostMapping("/login")
     public TokenResponse login(@RequestBody LoginRequest request) {

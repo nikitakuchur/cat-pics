@@ -1,5 +1,6 @@
-package com.github.nikitakuchur.catpics.security;
+package com.github.nikitakuchur.catpics.configs;
 
+import com.github.nikitakuchur.catpics.security.JwtTokenFilter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

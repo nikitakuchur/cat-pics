@@ -3,12 +3,20 @@ package com.github.nikitakuchur.catpics.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.github.nikitakuchur.catpics.security.UserRole;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "app_user")
 public class User implements UserDetails {
 
@@ -22,32 +30,6 @@ public class User implements UserDetails {
     @JsonIgnore
     @Enumerated(EnumType.STRING)
     private UserRole role;
-
-    protected User() {
-    }
-
-    public User(Long id, String username, String password, UserRole role) {
-        this.id = id;
-        this.username = username;
-        this.password = password;
-        this.role = role;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public UserRole getRole() {
-        return role;
-    }
 
     @JsonIgnore
     @Override
@@ -79,3 +61,4 @@ public class User implements UserDetails {
         return role.getGrantedAuthorities();
     }
 }
+

@@ -3,6 +3,7 @@ package com.github.nikitakuchur.catpics.services;
 import com.github.nikitakuchur.catpics.models.User;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -15,6 +16,7 @@ import java.time.Duration;
 import java.util.Date;
 
 @Service
+@RequiredArgsConstructor
 public class AuthService {
 
     private final AuthenticationManager authManager;
@@ -23,10 +25,6 @@ public class AuthService {
     private String secretKey;
     @Value("${application.jwt.access-token.lifetime}")
     private long accessTokenLifetime;
-
-    public AuthService(AuthenticationManager authManager) {
-        this.authManager = authManager;
-    }
 
     public String authenticate(String username, String password) {
         User user;

@@ -4,7 +4,7 @@ import com.github.nikitakuchur.catpics.exceptions.UsernameTakenException;
 import com.github.nikitakuchur.catpics.models.User;
 import com.github.nikitakuchur.catpics.repositories.UserRepository;
 import com.github.nikitakuchur.catpics.security.UserRole;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -16,16 +16,11 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class UserService implements UserDetailsService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-
-    @Autowired
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
-        this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
-    }
 
     public Optional<User> findByUsername(String username) {
         return userRepository.findByUsername(username);

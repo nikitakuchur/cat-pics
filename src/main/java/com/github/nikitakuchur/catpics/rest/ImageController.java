@@ -1,7 +1,7 @@
-package com.github.nikitakuchur.catpics.controllers;
+package com.github.nikitakuchur.catpics.rest;
 
 import com.github.nikitakuchur.catpics.services.FileService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -12,15 +12,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping(path = "/api/images")
 public class ImageController {
 
     private final FileService fileService;
-
-    @Autowired
-    public ImageController(FileService fileService) {
-        this.fileService = fileService;
-    }
 
     @GetMapping(value = "/{name}", produces = MediaType.IMAGE_JPEG_VALUE)
     @ResponseBody

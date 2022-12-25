@@ -1,8 +1,8 @@
-package com.github.nikitakuchur.catpics.controllers;
+package com.github.nikitakuchur.catpics.rest;
 
 import com.github.nikitakuchur.catpics.services.UserService;
 import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,17 +14,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping(path = "/api/user")
 public class UserController {
 
     private final UserService userService;
     private final HttpServletRequest context;
-
-    @Autowired
-    public UserController(UserService userService, HttpServletRequest context) {
-        this.userService = userService;
-        this.context = context;
-    }
 
     @GetMapping("/permissions")
     public List<String> getPermissions() {

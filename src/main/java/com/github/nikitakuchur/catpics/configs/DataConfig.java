@@ -1,4 +1,4 @@
-package com.github.nikitakuchur.catpics.repositories;
+package com.github.nikitakuchur.catpics.configs;
 
 import com.github.nikitakuchur.catpics.models.Post;
 import com.github.nikitakuchur.catpics.models.User;
